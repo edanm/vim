@@ -1,0 +1,8 @@
+" imap jk <esc>
+" syntax on
+
+
+let vimpath = '~/Dropbox/Resources/Vim/'
+set runtimepath+=~/Dropbox/Resources/vimrc/
+source ~/Dropbox/Resources/vimrc/vimrc
+
