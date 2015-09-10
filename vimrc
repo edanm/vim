@@ -402,8 +402,12 @@ function! GlobalColorSettings()
 	" where the file ends.
 	" Note: NonText also deals with some of the listchars, for example, eol,
 	" extends and precedes.
-	hi NonText guifg=bg
-	hi NonText guibg=bg
+    " TEMP: I'm trying to turn this off, because it makes me not see EOL
+    " chars.
+    " Will make the bg the bg, but keep it visible.
+	" hi NonText guifg=bg
+    hi NonText guibg=bg
+    hi NonText ctermbg=bg
 
 	" These lines deal with the SpecialKey, which is used for listchars. This
 	" basically gives the listchars the same background as everything else,
@@ -426,11 +430,12 @@ function! GlobalColorSettings()
 
 	let newcolor=AlterBrightness(bgcolor, step)
 	execute "hi SpecialKey guifg=" . newcolor . " guibg=bg gui=NONE"
+    " execute "hi SpecialKey ctermfg=" . newcolor . " ctermbg=bg gui=NONE"
 
 	" I like matchparen to have an underline to make it more obvious.
 	hi MatchParen gui=underline
 
-	hi Folded guibg=bg
+    hi Folded guibg=bg
 endfunction
 autocmd ColorScheme * call GlobalColorSettings()  " Call the global color settings on every colorscheme change.
 
@@ -902,6 +907,50 @@ function! EdanFoldText()
 	return spaces . '... ' . sep . lines . ' ' . linestxt
 endfunction
 
+function! EdanFoldText2()
+	let lines = 1 + v:foldend - v:foldstart
+    let line = getline(v:foldstart)
+	let ind = indent(v:foldstart)
+
+	let spaces = ''
+	let i = 0
+	while i < ind
+		let i = i + 1
+		let spaces = spaces . ' '
+	endwhile
+
+	let linestxt = 'lines'
+	if lines == 1
+		linestxt = 'line'
+	endif
+
+	let sep = repeat(' ', 20)
+
+    return line . '+' . v:folddashes . ' '. lines . ' ' . linestxt
+    " return spaces . '... ' . sep . lines . ' ' . linestxt
+endfunction
+
+
+" Copied from Steve Losh:
+" https://bitbucket.org/sjl/dotfiles/src/tip/vim/vimrc
+function! LoshFoldText() " {{{
+    let line = getline(v:foldstart)
+
+    let nucolwidth = &fdc + &number * &numberwidth
+    let windowwidth = winwidth(0) - nucolwidth - 3
+    let foldedlinecount = v:foldend - v:foldstart
+
+    " expand tabs into spaces
+    let onetab = strpart('          ', 0, &tabstop)
+    let line = substitute(line, '\t', onetab, 'g')
+
+    let line = strpart(line, 0, windowwidth - 2 -len(foldedlinecount))
+    let fillcharcount = windowwidth - len(line) - len(foldedlinecount)
+    return line . '…' . repeat(" ",fillcharcount) . foldedlinecount . '…' . ' '
+endfunction " }}}
+
+" set foldtext=MyFoldText()
+
 " set foldtext=CustomFoldText()
 " set foldtext=MyFoldText2()
 
@@ -909,8 +958,7 @@ endfunction
 " After trying it for a bit, I decided I don't much like it.
 " set fillchars=fold:\ 
 set foldtext=EdanFoldText()
-
-
+" set foldtext=LoshFoldText()
 
 "make shift Y behave like shift-[cd] (copy to end of line)
 nnoremap Y y$
@@ -931,9 +979,10 @@ set virtualedit=block
 set ruler
 
 " Set "<leader> s" to show whitespace.
-set listchars=tab:\|\ ,trail:·,extends:»,precedes:«,nbsp:×
-nmap <silent> <leader>S :set nolist!<CR>
 set list
+" set listchars=tab:\|\ ,trail:·,extends:»,precedes:«,nbsp:×
+set listchars=tab:▸\ ,eol:¬,extends:❯,precedes:❮
+nmap <silent> <leader>S :set nolist!<CR>
 
 "autocmd FileType python 
 "set omnifunc=pythoncomplete#Complete
@@ -949,6 +998,8 @@ let NERDSpaceDelims=1
 
 
 set laststatus=2
+" I think this statusline is no longer relevant. Because we use plugins for
+" this.
 set statusline=%1*%m%*\ %t\ %f\ %r%h%w\ [FILETYPE=%Y]\ [ASCII=\%03.3b]\ [HEX=0x\%02.2B]\ [POS=%04l,%04v]\ [%p%%]\ [LEN=%L]
 hi User1 term=inverse,bold cterm=inverse,bold ctermfg=red 
 
