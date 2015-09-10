@@ -446,11 +446,11 @@ autocmd ColorScheme * call GlobalColorSettings()  " Call the global color settin
 " colorscheme solarized 
 " colorscheme moria 
 
-set background=dark
 " let g:molokai_original = 1
 " colorscheme molokai
-colorscheme monokai
 " colorscheme wombat
+set background=dark
+colorscheme monokai
 
 
 " Gets rid of the bell (still use a visual bell).
@@ -639,6 +639,27 @@ endif
 return "\<CR>"
 endfun
 inoremap <CR> <C-R>=SplitBracesCR()<CR>
+
+
+" Zip Right: stolen from Steve Losh :) Remapped to a different key
+" https://bitbucket.org/sjl/dotfiles/src/tip/vim/vimrc#vimrc-338
+" Zip Right
+"
+" Moves the character under the cursor to the end of the line.  Handy when you
+" have something like:
+"
+"     foo
+"
+" And you want to wrap it in a method call, so you type:
+"
+"     println()foo
+"
+" Once you hit escape your cursor is on the closing paren, so you can 'zip' it
+" over to the right with this mapping.
+"
+" This should preserve your last yank/delete as well.
+nnoremap z; :let @z=@"<cr>x$p:let @"=@z<cr>
+
 
 
 " Edan - working on this.
