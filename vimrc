@@ -43,6 +43,13 @@ vnoremap <silent> <leader><leader> <esc>
 " Set this to make vim's clipboard be the system clipboad.
 set clipboard=unnamed
 
+set splitright
+set splitbelow
+set colorcolumn=+1
+
+" Save when losing focus
+au FocusLost * :silent! wall
+
 
 " Map R to delete to black hole register. Mnemonic - "[R]eally delete".
 " This is done with AU becasue AutoComplPop kills the mapping.
@@ -172,7 +179,7 @@ nmap  gC     <Plug>CyclePrevious
 set nowrap
 
 " Syntax coloring lines that are too long just slows down the world
-" Made this MUCH larger othewrsie it screws up things like bracket matching.
+" Made this MUCH larger otherwise it screws up things like bracket matching.
 set synmaxcol=5000
 set lazyredraw " to avoid scrolling problems
 
@@ -213,6 +220,11 @@ set noswapfile
 
 " Very important for Linux - map w!! to force save if file is readonly. 
 cmap w!! %!sudo tee > /dev/null %
+
+
+" Make the brightest work by underlining the word under the cursor.
+let g:brightest#highlight = {"group": "BrightestUnderline"}
+
 
 " set cptions+=I
 " set cpoptions+=$ " Try this for a while 
@@ -582,9 +594,9 @@ nnoremap <leader>t :set expandtab!<cr>:set expandtab?<cr>
 
 set timeoutlen=1000
 
-"set spell
-"set spellsuggest=5
-set nospell
+set spell
+set spellsuggest=5
+" set nospell
 
 fun! SplitBracesCR()
 if strpart(getline('.'), col('.') - 2, 2) == '{}'
