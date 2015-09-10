@@ -13,6 +13,9 @@ execute "set runtimepath ^=".vimpath."/plugins/vim-less"
 
 
 let mapleader = ","
+" Very important: remap jk/kj to escape.
+inoremap jk <Esc>
+inoremap kj <Esc>
 
 " Another option for leader key: may want to one day try this.
 " let mapleader = "\<Space>"
@@ -35,17 +38,13 @@ vnoremap <silent> <leader><leader> <esc>
 " nnoremap <silent> \, ,
 " nnoremap \ :echo "DIDN'T DO ANYTHING!!!"<cr>
 " nnoremap ,, ,
-"
 
-" Very important: remap jk/kj to espace.
-inoremap jk <Esc>
-inoremap kj <Esc>
 
 " Set this to make vim's clipboard be the system clipboad.
 set clipboard=unnamed
 
 
-" Mape R to delete to black hole register. Mnemonic - "[R]eally delete".
+" Map R to delete to black hole register. Mnemonic - "[R]eally delete".
 " This is done with AU becasue AutoComplPop kills the mapping.
 au BufRead,BufNewFile * nnoremap R "_d
 au BufRead,BufNewFile * nnoremap RR "_dd
@@ -85,11 +84,15 @@ let g:EasyMotion_use_upper = 1
 let g:EasyMotion_keys = 'ASDFGHJL;ZXCVBNMQWERTYUIOPK'
 " let g:EasyMotion_keys = 'FJDKSLIONM,HXCVGWERAQW'
 
+
+" Highlight the current word under the cursor. Copied from: https://www.reddit.com/r/vim/comments/2q8el3/vimbrightest_highlights_the_word_under_the_cursor/
+" Couldn't find a decent color for this so disabling for now.
+" highlight WordUnder guibg=#264b4b ctermbg=8
+" autocmd CursorMoved * exe printf('match WordUnder /\V\<%s\>/', escape(expand('<cword>'), '/\'))
+
 " let g:EasyMotion_mapping_w = '<space>'
 
 " map <space> <Plug>(easymotion-jumptoanywhere)
-
-" Edan TEMP TEMP TEMP
 nmap <space> <Plug>(easymotion-bd-w)
 vmap <space> <Plug>(easymotion-bd-w)
 
@@ -127,13 +130,6 @@ let g:EasyMotion_use_smartsign_us = 1
 let EasyGrepMode = 2
 let EasyGrepRecursive=1
 
-let g:showmarks_include="abcdefghijklmnopqrstuvwxyz"
-
-" Load the colorschemes
-" execute "set runtimepath ^=".vimpath."/colorschemes"
-
-
-
 " Syntastic stuff.
 let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-", " proprietary attribute \"ui-", "missing </a", "discarding unexpected </a", "missing </a", "trimming empty"]
 
@@ -148,8 +144,9 @@ noremap _ mzo<Esc>`z
 
 
 " vim-expand-region mappings.
-map <leader>f <Plug>(expand_region_expand)
-map <leader>F <Plug>(expand_region_shrink)
+" map <leader>f <Plug>(expand_region_expand)
+" map <leader>F <Plug>(expand_region_shrink)
+
 " Next test: map 'v' to expand-region from visual mode. 
 " This means hitting 'v' repeatedly expands the region, very useful.
 " This is OK, beacuse the normal map for 'v' from visual mode is to escape
@@ -171,7 +168,7 @@ nmap  gc     <Plug>CycleNext
 nmap  gC     <Plug>CyclePrevious
 
 
-" I hate wrapping. 
+" I hate wrapping.
 set nowrap
 
 " Syntax coloring lines that are too long just slows down the world
@@ -180,28 +177,10 @@ set synmaxcol=5000
 set lazyredraw " to avoid scrolling problems
 
 
-" Set up camelcasemotion commands.
-" Let's try this for a while - replace default move by word to do camelcase.
-" map w <Plug>CamelCaseMotion_w
-" map b <Plug>CamelCaseMotion_b
-" map e <Plug>CamelCaseMotion_e
-" noremap ,w w
-" noremap ,b b
-" noremap ,e e
-
 " That wasn't fun in yanking, let's try the old way,
 map ,w <Plug>CamelCaseMotion_w
 map ,b <Plug>CamelCaseMotion_b
 map ,e <Plug>CamelCaseMotion_e
-
-" This is probably not a good idea - remap the 'inner' commands for camelcase.
-" omap iw <Plug>CamelCaseMotion_iw
-" xmap iw <Plug>CamelCaseMotion_iw
-" omap ib <Plug>CamelCaseMotion_ib
-" xmap ib <Plug>CamelCaseMotion_ib
-" omap ie <Plug>CamelCaseMotion_ie
-" xmap ie <Plug>CamelCaseMotion_ie
-
 
 " Map ctrl-s to save, for sanity.
 nmap <c-s> :w<cr>
@@ -439,6 +418,7 @@ function! GlobalColorSettings()
 endfunction
 autocmd ColorScheme * call GlobalColorSettings()  " Call the global color settings on every colorscheme change.
 
+" Some colorschemes that I like.
 " colorscheme evening
 " colorscheme peaksea
 " colorscheme pyte 
@@ -465,6 +445,7 @@ colorscheme monokai
 " Actually, new trial, don't do that.
 set vb
 set noerrorbells visualbell t_vb=
+
 " No sound on errors
 autocmd GUIEnter * set visualbell t_vb=
 autocmd GUIEnter * call GlobalColorSettings()
