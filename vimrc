@@ -660,52 +660,6 @@ inoremap <CR> <C-R>=SplitBracesCR()<CR>
 " This should preserve your last yank/delete as well.
 nnoremap z; :let @z=@"<cr>x$p:let @"=@z<cr>
 
-
-
-" Edan - working on this.
-" Or at least I was at some point.
-fun! ReGvInit()
-
-" Initialize the ReGv variables, if they don't exist. 
-if !exists('b:regv_loaded_for_buffer')
-    let b:regv_gv_list = []
-    let b:regv_index = 0
-    let b:regv_loaded_for_buffer = 1
-endif
-endf
-
-" Someone called ReGv from normal mode. 
-"  
-function! ReGvNormal(vis_mode, direction)
-call ReGvInit()
-
-" if a:vis_mode == 0
-    " " We're in normal mode, jump to the last edit place.
-    " normal! `[v`]
-
-    
-    " " Also, remember that we are starting from the top of the gv list.
-    " let b:regv_index = len(a:regv_gv_list) - 1
-" endif
-
-
-if a:vis_mode == 0
-    " Also, remember that we are starting from the top of the gv list.
-    let b:regv_index = len(a:regv_gv_list) - 1
-endif
-
-let sel_start_point = [line("'<"), col("'<")]
-let sel_end_point = [line("'>"), col("'>")] 
-let p = [visualmode(), sel_start_point, sel_end_point]
-
- " Check if this point is new.
- if b:regv_gv_list[len(b:regv_gv_list)] != p
-     call add(b:regv_gv_list, p)
-endif
-
-
-endfun
-
 " Visually select the text that was last edited/pasted
 " Copied from: http://vimcasts.org/episodes/bubbling-text/
 nnoremap gV `[v`]
