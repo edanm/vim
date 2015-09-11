@@ -131,6 +131,11 @@ map z? <Plug>(incsearch-fuzzy-?)
 " surround.
 xmap s <Plug>VSurround
 
+
+
+" This makes star stay in place. Not sure I need it right now.
+" nnoremap <silent> * :let stay_star_view = winsaveview()<cr>*:call winrestview(stay_star_view)<cr>
+
 let g:EasyMotion_smartcase = 1
 let g:EasyMotion_use_smartsign_us = 1
 
@@ -659,6 +664,7 @@ inoremap <CR> <C-R>=SplitBracesCR()<CR>
 "
 " This should preserve your last yank/delete as well.
 nnoremap z; :let @z=@"<cr>x$p:let @"=@z<cr>
+
 
 " Visually select the text that was last edited/pasted
 " Copied from: http://vimcasts.org/episodes/bubbling-text/
