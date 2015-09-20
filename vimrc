@@ -11,7 +11,6 @@ execute "set runtimepath ^=".vimpath."/plugins/matchit"
 execute "set runtimepath ^=".vimpath."/plugins/python_matchit"
 execute "set runtimepath ^=".vimpath."/plugins/vim-less"
 
-
 let mapleader = ","
 " Very important: remap jk/kj to escape.
 inoremap jk <Esc>
@@ -28,16 +27,8 @@ language en_US.UTF-8
 nnoremap ,; ,
 
 
-" let g:indentLine_color_term = 239
-" let g:indentLine_char = 'c'
-
-" nnoremap <silent> \ :nohlsearch<Bar>:echo<CR>
-" vnoremap <silent> \ <esc>
 nnoremap <silent> <leader><leader> :nohlsearch<Bar>:echo<CR>
 vnoremap <silent> <leader><leader> <esc>
-" nnoremap <silent> \, ,
-" nnoremap \ :echo "DIDN'T DO ANYTHING!!!"<cr>
-" nnoremap ,, ,
 
 
 " Set this to make vim's clipboard be the system clipboad.
@@ -201,7 +192,7 @@ nmap <c-s> :w<cr>
 imap <c-s> jk:w<cr>
 
 
-let g:user_emmet_leader_key='<c-f>'
+let g:user_emmet_leader_key='<c-t>'
 
 
 if has("multi_byte")
@@ -346,19 +337,6 @@ set guioptions-=T
 " nmap <c-tab> <c-^>
 nmap <c-tab> :bp<cr>
 nmap <c-s-tab> :bn<cr>
-
-
-
-fun! GenerateSearch()
-    let today = strftime("%Y-%m-%d")
-
-    for part in split(today, "-")
-        echo part
-    endfor
-endf
-
-
-
 
 " set complete=.,w,b,u,t,i,]
 
@@ -604,44 +582,44 @@ set spellsuggest=5
 " set nospell
 
 fun! SplitBracesCR()
-if strpart(getline('.'), col('.') - 2, 2) == '{}'
-    return "\<CR>\<CR>\<Up>\<Tab>"
-endif
-if strpart(getline('.'), col('.') - 2, 2) == '()'
-    return "\<CR>\<CR>\<Up>\<Tab>"
-endif
-if strpart(getline('.'), col('.') - 2, 2) == '><'
-    return "\<CR>\<CR>\<Up>\<Tab>"
-endif
-if strpart(getline('.'), col('.') - 2, 2) == '> <'
-    return "\<CR>\<CR>\<Up>\<Tab>"
-endif
+    if strpart(getline('.'), col('.') - 2, 2) == '{}'
+        return "\<CR>\<CR>\<Up>\<Tab>"
+    endif
+    if strpart(getline('.'), col('.') - 2, 2) == '()'
+        return "\<CR>\<CR>\<Up>\<Tab>"
+    endif
+    if strpart(getline('.'), col('.') - 2, 2) == '><'
+        return "\<CR>\<CR>\<Up>\<Tab>"
+    endif
+    if strpart(getline('.'), col('.') - 2, 2) == '> <'
+        return "\<CR>\<CR>\<Up>\<Tab>"
+    endif
 
-" Tryout!!! 
-" This has a few bugs, get rid of it for now.
-" if match(getline('.'), '^\s*\*') != -1
-    " return "\<CR>* "
-" endif
+    " Tryout!!! 
+    " This has a few bugs, get rid of it for now.
+    " if match(getline('.'), '^\s*\*') != -1
+        " return "\<CR>* "
+    " endif
 
-" if match(getline('.'), '^\s*\-') != -1
-    " return "\<CR>- "
-" endif
+    " if match(getline('.'), '^\s*\-') != -1
+        " return "\<CR>- "
+    " endif
 
 
-" End Tryout!! 
+    " End Tryout!! 
 
-" if strpart(getline('.'), col('.') - 2, 2) == '()'
-    " return "\<CR>\<CR>\<Up>\<Tab>"
-" endif
+    " if strpart(getline('.'), col('.') - 2, 2) == '()'
+        " return "\<CR>\<CR>\<Up>\<Tab>"
+    " endif
 
-" if strpart(getline('.'), col('.') - 2, 2) == '[]'
-    " return "\<CR>\<CR>\<Up>\<Tab>"
-" endif
+    " if strpart(getline('.'), col('.') - 2, 2) == '[]'
+        " return "\<CR>\<CR>\<Up>\<Tab>"
+    " endif
 
-" if strpart(getline('.'), col('.') - 2, 2) == '""'
-    " return "\<CR>\<CR>\<Up>\<Tab>"
-" endif
-return "\<CR>"
+    " if strpart(getline('.'), col('.') - 2, 2) == '""'
+        " return "\<CR>\<CR>\<Up>\<Tab>"
+    " endif
+    return "\<CR>"
 endfun
 inoremap <CR> <C-R>=SplitBracesCR()<CR>
 
@@ -1352,16 +1330,6 @@ omap <silent> iP <Plug>AngryInnerSuffix
 " WARNING: This doesn't work well! Unortunately, because of the way the
 " Paramater object works.
 nmap cxP cxiPf,llcxiP
-
-
-
-
-" " vim streak mappings.
-" let g:sneak#streak = 1
-" nmap s <Plug>(SneakStreak)
-" " nmap S <Plug>(SneakStreakBackward)
-" let g:sneak#use_ic_scs = 1
-
 
 
 " http://www.reddit.com/r/vim/comments/1yfzg2/does_anyone_actually_use_easymotion/
