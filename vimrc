@@ -134,7 +134,8 @@ let EasyGrepMode = 2
 let EasyGrepRecursive=1
 
 " Syntastic stuff.
-let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-", " proprietary attribute \"ui-", "missing </a", "discarding unexpected </a", "missing </a", "trimming empty"]
+" let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-", " proprietary attribute \"ui-", "missing </a", "discarding unexpected </a", "missing </a", "trimming empty"]
+let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute " ,"trimming empty <", "unescaped &" , "lacks \"action", "is not recognized!", "discarding unexpected"]
 
 " Reselect visual block after indent/outdent
 vnoremap < <gv
@@ -248,13 +249,8 @@ let g:tagbar_type_css = {
 
 
 " We set these for snimpate to work properly. 
-au BufRead,BufNewFile *.py		set filetype=python.django
-au BufRead,BufNewFile *.html	set filetype=htmldjango.html
-"
-" NOTE: I took out the above line because AutoComplPop gives a way cooler
-" ability on html files, but it only works for actual .html files, not
-" .htmldjango .
-
+" au BufRead,BufNewFile *.py		set filetype=python.django
+" au BufRead,BufNewFile *.html	set filetype=htmldjango.html
 
 
 " For highlight builtin functions and objects:
@@ -433,6 +429,7 @@ autocmd ColorScheme * call GlobalColorSettings()  " Call the global color settin
 " colorscheme molokai
 " colorscheme wombat
 set background=dark
+" colorscheme base16-flat
 colorscheme monokai
 
 
@@ -933,7 +930,8 @@ set ruler
 " Set "<leader> s" to show whitespace.
 set list
 " set listchars=tab:\|\ ,trail:·,extends:»,precedes:«,nbsp:×
-set listchars=tab:▸\ ,eol:¬,extends:❯,precedes:❮
+" set listchars=tab:▸\ ,eol:¬,extends:❯,precedes:❮
+set listchars=tab:▸\ ,extends:❯,precedes:❮
 nmap <silent> <leader>S :set nolist!<CR>
 
 "autocmd FileType python 
@@ -1013,7 +1011,7 @@ nnoremap ` '
 nnoremap d' d`
 nnoremap d` d'
 
-" It's always made more sense to me to use 0 insteead of ^ to go to the home,
+" It's always made more sense to me to use 0 instead of ^ to go to the home,
 " because it's something I do ALL THE FRIGGING TIME and I always prefer to go
 " to the first character.
 nnoremap 0 ^
