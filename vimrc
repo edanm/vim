@@ -36,7 +36,7 @@ set clipboard=unnamed
 
 set splitright
 set splitbelow
-set colorcolumn=+1
+set colorcolumn=80
 
 " Save when losing focus
 au FocusLost * :silent! wall
@@ -59,6 +59,7 @@ nnoremap K 0D
 
 
 set formatoptions=n
+set formatoptions-=o
 
 
 " Configure YouCompleteMe to NOT use tabs to cycle through options.
