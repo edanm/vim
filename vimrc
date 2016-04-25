@@ -13,6 +13,8 @@ execute "set runtimepath ^=".vimpath."/plugins/vim-less"
 
 let mapleader = ","
 " Very important: remap jk/kj to escape.
+" HERESY: I'm turning this off for a bit to see if I get used to the new way
+" of doing escape.
 inoremap jk <Esc>
 inoremap kj <Esc>
 
@@ -36,7 +38,9 @@ set clipboard=unnamed
 
 set splitright
 set splitbelow
-set colorcolumn=80
+set textwidth=80
+set colorcolumn=0
+set colorcolumn=+1
 
 " Save when losing focus
 au FocusLost * :silent! wall
@@ -51,12 +55,17 @@ au BufRead,BufNewFile * vnoremap R "_x
 
 " Actually, no reason 'r' can't do this, visually selecting and replacing
 " with char is just not common enough.
-au BufRead,BufNewFile * vnoremap r "_x
+" au BufRead,BufNewFile * vnoremap r "_x
 
 
 " Map K to "Kill entire line".
-nnoremap K 0D
+" Note: new way to remap this, because 0D is not repeatable with the dot
+" command.
+" nnoremap K 0D
+nnoremap K cc<esc>
 
+" And map K in visual mode to "Kill all lines"
+vmap K :s/^.\+$//<cr>:nohlsearch<Bar>:echo<CR>
 
 set formatoptions=n
 set formatoptions-=o
@@ -98,15 +107,20 @@ vmap <space> <Plug>(easymotion-bd-w)
 " Incsearch plugin settings.
 let g:incsearch#consistent_n_direction = 0
 
-" I'm not mapping backward search because it breaks the use of n.
 map /  <Plug>(incsearch-forward)
-" map ?  <Plug>(incsearch-backward)
+map ?  <Plug>(incsearch-backward)
+
 map z/ <Plug>(incsearch-fuzzy-/)
 map z? <Plug>(incsearch-fuzzy-?)
 
 " Don't map these for now.
 " map g/ <Plug>(incsearch-stay)
 " map g/ <Plug>(incsearch-fuzzy-stay)
+
+
+" Override visual star search to grep.
+nnoremap <leader>* :call ag#Ag('grep', '--literal ' . shellescape(expand("<cword>")))<CR>
+vnoremap <leader>* :<C-u>call VisualStarSearchSet('/', 'raw')<CR>:call ag#Ag('grep', '--literal ' . shellescape(@/))<CR>
 
 
 " Make the second letter NOT highlighted in easymotion to prevent massive
@@ -137,6 +151,12 @@ let EasyGrepRecursive=1
 " Syntastic stuff.
 " let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-", " proprietary attribute \"ui-", "missing </a", "discarding unexpected </a", "missing </a", "trimming empty"]
 let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute " ,"trimming empty <", "unescaped &" , "lacks \"action", "is not recognized!", "discarding unexpected"]
+"
+" use jshint
+let g:syntastic_javascript_checkers = ['jshint']
+
+" show any linting errors immediately
+let g:syntastic_check_on_open = 1
 
 " Reselect visual block after indent/outdent
 vnoremap < <gv
@@ -277,8 +297,6 @@ let python_highlight_string_templates = 1
 "
 let python_highlight_numbers = 1
 
-" let g:snips_trigger_key='<c-space>'
-" let g:snips_trigger_key='<c-f>'
 
 
 " Jump to a number.
@@ -418,12 +436,12 @@ autocmd ColorScheme * call GlobalColorSettings()  " Call the global color settin
 " colorscheme inkpot
 " colorscheme wombat
 " colorscheme lucius
-" colorscheme xoria256
 " colorscheme mustang 
 " colorscheme ir_black 
 " colorscheme risto 
 " colorscheme jellybeans
 " colorscheme solarized 
+" colorscheme xoria256
 " colorscheme moria 
 
 " let g:molokai_original = 1
@@ -517,8 +535,9 @@ cmap <m-f> **/*
 
 " New: try to adda command line mappign which goes to the end of a search.
 " And actually, let's also add a normal mode map.
-cmap ,e /e+1
-nmap <leader>E //e+1<left><left><left><left>
+" NOTE: Disabled this because it was interfering with plain old ,e.
+" cmap ,e /e+1
+" nmap <leader>E //e+1<left><left><left><left>
 
 
 " let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$'
@@ -570,6 +589,8 @@ set shiftwidth=4
 set softtabstop=4
 set tabstop=4
 set expandtab
+
+set showcmd
 
 nnoremap <leader>t :set expandtab!<cr>:set expandtab?<cr>
 
@@ -660,7 +681,7 @@ let delimitMate_expand_space = 1
 
 " From: http://vim.wikia.com/wiki/VimTip1142
 " nmap . .`[
-noremap <leader>q `[<Down>.
+" noremap <leader>q `[<Down>.
 vnoremap <silent> . :normal .<CR>
 
 
@@ -687,7 +708,8 @@ function! QActivate()
 endfunction
 
 " And my own addition, which repeats a macro (recorded on register "q") on selected lines.
-vnoremap <silent> <leader>s :normal @q<CR>
+" vnoremap <silent> <leader>s :normal @q<CR>
+vnoremap <silent> <leader>q :normal @q<CR>
 
 
 
@@ -699,7 +721,7 @@ set wildmenu
 
 " Highlight current line
 " Try without this for a bit
-set cursorline
+" set cursorline
 
 
 " This makes folds work by indent, but also allows manual folding.
@@ -919,6 +941,11 @@ set history=1000
 nnoremap <C-e> 4<C-e>
 nnoremap <C-y> 4<C-y>
 
+" Faster right/left viewport scrolling.
+nnoremap zl 10zl
+nnoremap zh 10zh
+"
+
 " 2 lines above/below cursor when scrolling 
 set scrolloff=2
 set sidescrolloff=15
@@ -931,8 +958,8 @@ set ruler
 " Set "<leader> s" to show whitespace.
 set list
 " set listchars=tab:\|\ ,trail:·,extends:»,precedes:«,nbsp:×
-" set listchars=tab:▸\ ,eol:¬,extends:❯,precedes:❮
-set listchars=tab:▸\ ,extends:❯,precedes:❮
+set listchars=tab:▸\ ,eol:¬,extends:❯,precedes:❮
+" set listchars=tab:▸\ ,extends:❯,precedes:❮
 nmap <silent> <leader>S :set nolist!<CR>
 
 "autocmd FileType python 
@@ -941,7 +968,7 @@ nmap <silent> <leader>S :set nolist!<CR>
 " My mapping for the nerd commenter insert, which makes sure to add a space.
 imap <D-/> <plug>NERDCommenterInsert
 " New idea - when commenting, go down one line.
-nmap      <D-/> <plug>NERDCommenterToggle<cr>
+nmap      <D-/> <plug>NERDCommenterToggle
 vmap      <D-/> <plug>NERDCommenterToggle
 
 " Add spaces when commenting.
