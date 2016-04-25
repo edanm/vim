@@ -1077,6 +1077,23 @@ let NERDTreeChDirMode=2 " Changes the cwd to whatever the root is.
 let NERDTreeMinimalUI=1
 let NERDTreeDirArrows=1
 
+" NERDTree Colors
+
+" Enable this to get color coding of files in NerdTree.
+" function! NThl(mtch, cs)
+  " exec "autocmd filetype nerdtree syn match " . a:mtch . " #^\\s\\+.*" . a:mtch . "\\*\\?$#"
+  " exec "autocmd filetype nerdtree highlight " . a:mtch . " " . a:cs
+" endfunction
+" augroup MyNerdTree
+  " autocmd!
+  " call NThl('php', 'ctermfg=077 guifg=#5FD75F gui=BOLD cterm=BOLD')
+  " call NThl('css', 'ctermfg=57 guifg=#5F00FF gui=BOLD cterm=BOLD')
+  " autocmd filetype nerdtree highlight Directory ctermfg=166 guifg=#D75F00 gui=BOLD cterm=BOLD
+" augroup END " MyNerdTree
+" highlight NERDTreeDirSlash guifg=#005F87 ctermfg=24 gui=BOLD cterm=BOLD
+" highlight NERDTreeCWD guifg=#444444 ctermfg=238 gui=BOLD cterm=BOLD
+" highlight NERDTreeOpenable guifg=#005F87 ctermfg=24 gui=BOLD cterm=BOLD
+" highlight NERDTreeClosable guifg=#00AFFF ctermfg=39 gui=BOLD cterm=BOLD
 
 
 " Jump to the next or previous line that has the same level or a lower
@@ -1385,3 +1402,19 @@ nmap cxP cxiPf,llcxiP
 cnoremap $y <CR>:t''<CR>
 cnoremap $m <CR>:m''<CR>
 cnoremap $d <CR>:d<CR>``
+
+
+
+" Plugins configuration section (TBD: transfer plugin config here)
+
+" Startify
+let g:startify_bookmarks = [ {'c': '~/.vimrc'}, '~/.zshrc' ]
+
+let g:startify_list_order = [
+            \ ['MRU Files'],
+            \ 'files',
+            \ ['Sessions'],
+            \ 'sessions',
+            \ ['Bookmarks'],
+            \ 'bookmarks',
+            \ ]
