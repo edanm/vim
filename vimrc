@@ -11,15 +11,18 @@ execute "set runtimepath ^=".vimpath."/plugins/matchit"
 execute "set runtimepath ^=".vimpath."/plugins/python_matchit"
 execute "set runtimepath ^=".vimpath."/plugins/vim-less"
 
+
+
+" let mapleader = "\<Space>"
 let mapleader = ","
+
 " Very important: remap jk/kj to escape.
 " HERESY: I'm turning this off for a bit to see if I get used to the new way
 " of doing escape.
-inoremap jk <Esc>
-inoremap kj <Esc>
+" inoremap jk <Esc>
+" inoremap kj <Esc>
 
-" Another option for leader key: may want to one day try this.
-" let mapleader = "\<Space>"
+
 
 set completeopt=longest,menu,preview
 language en_US.UTF-8
@@ -70,7 +73,6 @@ vmap K :s/^.\+$//<cr>:nohlsearch<Bar>:echo<CR>
 set formatoptions=n
 set formatoptions-=o
 
-
 " Configure YouCompleteMe to NOT use tabs to cycle through options.
 let g:ycm_key_list_select_completion = []
 let g:ycm_key_list_previous_completion = []
@@ -119,8 +121,11 @@ map z? <Plug>(incsearch-fuzzy-?)
 
 
 " Override visual star search to grep.
-nnoremap <leader>* :call ag#Ag('grep', '--literal ' . shellescape(expand("<cword>")))<CR>
-vnoremap <leader>* :<C-u>call VisualStarSearchSet('/', 'raw')<CR>:call ag#Ag('grep', '--literal ' . shellescape(@/))<CR>
+" nnoremap <leader>* :call ag#Ag('grep', '--literal ' . shellescape(expand("<cword>")))<CR>
+" vnoremap <leader>* :<C-u>call VisualStarSearchSet('/', 'raw')<CR>:call ag#Ag('grep', '--literal ' . shellescape(@/))<CR>
+
+nnoremap c> *``cgn
+nnoremap c< #``cgN
 
 
 " Make the second letter NOT highlighted in easymotion to prevent massive
@@ -666,6 +671,7 @@ nnoremap z; :let @z=@"<cr>x$p:let @"=@z<cr>
 " Visually select the text that was last edited/pasted
 " Copied from: http://vimcasts.org/episodes/bubbling-text/
 nnoremap gV `[v`]
+
 
 " And a quick fix - reformat the last moved text. Cause I always forget to use
 " ]p instead of p.
