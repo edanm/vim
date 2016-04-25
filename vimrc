@@ -723,6 +723,21 @@ set wildmenu
 " Try without this for a bit
 " set cursorline
 
+" OK new plan, try to set it up so the cursorline is visible on current window.
+set cursorline
+augroup highlight_follows_focus
+    autocmd!
+    autocmd WinEnter * set cursorline
+    autocmd WinLeave * set nocursorline
+augroup END
+
+augroup highlight_follows_insert
+    autocmd!
+    autocmd InsertLeave * set cursorline
+    autocmd InsertEnter * set nocursorline
+augroup END
+
+
 
 " This makes folds work by indent, but also allows manual folding.
 " augroup vimrc
