@@ -70,8 +70,15 @@ nnoremap K cc<esc>
 " And map K in visual mode to "Kill all lines"
 vmap K :s/^.\+$//<cr>:nohlsearch<Bar>:echo<CR>
 
-set formatoptions=n
-set formatoptions-=o
+" I've hacked the following formatoptions settings into an autocmd because
+" for some reason, they kept getting overriden (an ftplugin maybe?).
+
+" Original:
+" set formatoptions=n
+" set formatoptions+=j " Delete comment character when joining commented lines
+" set formatoptions -=o
+autocmd BufNewFile,BufRead,BufWinEnter  * setlocal formatoptions+=nj
+autocmd BufNewFile,BufRead,BufWinEnter * setlocal formatoptions-=o
 
 " Configure YouCompleteMe to NOT use tabs to cycle through options.
 let g:ycm_key_list_select_completion = []
@@ -190,7 +197,6 @@ vmap <leader>v <Plug>(expand_region_shrink)
 set iskeyword ^=-
 
 
-set formatoptions+=j " Delete comment character when joining commented lines
 
 
 let g:cycle_no_mappings=1
@@ -338,10 +344,6 @@ set bs=2
 nnoremap <bs> k^
 vnoremap <bs> k^
 
-" set guifont=Envy\ Code\ R:h10
-" set guifont=DejaVu_Sans_Mono:h10
-set guifont=Monaco:h12
-" set guifont=Consolas:h10
 
  " Maximize Vim on startup.
 " au GUIEnter * simalt ~x
@@ -1418,3 +1420,28 @@ let g:startify_list_order = [
             \ ['Bookmarks'],
             \ 'bookmarks',
             \ ]
+
+
+
+
+" set guifont=Envy\ Code\ R:h10
+" set guifont=DejaVu_Sans_Mono:h10
+" set guifont=Consolas:h10
+
+" My default font for a looong time.
+" Currently trying replacements (see below).
+set guifont=Monaco:h12
+
+" DevIcons (nerdfonts)
+" set guifont=Fura\ Code:h13
+" set guifont=DroidSansMonoForPowerline\ Nerd\ Font:h13
+" set guifont=Knack\ Nerd\ Font:h13
+" set guifont=ProFontWindows\ Nerd\ Font:h16
+" set guifont=AnonymicePowerline\ Nerd\ Font:h15 " Really awesome, should try.
+" set guifont=BitStreamVeraSansMono\ Nerd\ Font:h13
+" set guifont=DejaVuSansMonoForPowerline\ Nerd\ Font:h13
+" set guifont=Hurmit\ Nerd\ Font:h13 " Nice, but too 'robotic'. But maybe not?
+" set guifont=InconsolataForPowerline\ Nerd\ Font:h15 " Very nice! Should try. 
+" set guifont=Lekton\ Nerd\ Font:h15 " Nice, a bit 'straight' and 'hard'. But Nice.
+set guifont=AurulentSansMono\ Nerd\ Font:h13 " My favorite so far
+
