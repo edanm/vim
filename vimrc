@@ -1,11 +1,11 @@
 " Load the following plugins. We do this manually for the control it gives us.
 execute pathogen#infect()
 " Need to source the indent-lines after file separately for some reason.
-execute "source ".vimrealpath."/bundle/indentLine/after/plugin/indentLine.vim"
+" execute "source ".vimrealpath."/bundle/indentLine/after/plugin/indentLine.vim"
+" execute "set runtimepath ^=".vimpath."/plugins/ctrlp"
 
 execute "set runtimepath ^=".vimpath."/plugins/vim-l9"
 execute "set runtimepath ^=".vimpath."/plugins/genutils-2.5"
-execute "set runtimepath ^=".vimpath."/plugins/ctrlp"
 execute "set runtimepath ^=".vimpath."/plugins/vim-css"
 execute "set runtimepath ^=".vimpath."/plugins/matchit"
 execute "set runtimepath ^=".vimpath."/plugins/python_matchit"
@@ -34,6 +34,7 @@ nnoremap ,; ,
 
 nnoremap <silent> <leader><leader> :nohlsearch<Bar>:echo<CR>
 vnoremap <silent> <leader><leader> <esc>
+
 
 
 " Set this to make vim's clipboard be the system clipboad.
@@ -385,53 +386,53 @@ fun! AlterBrightness(hexcolor, steps)
 	return '#' . printf('%02x', r) . printf('%02x', g) . printf('%02x', b)
 endf
 
-" Set global color settings, regardless of colorschem currently in use.
+" Set global color settings, regardless of colorscheme currently in use.
 function! GlobalColorSettings()
-	" Setting my own personal preferences for color schemes. This OVERRIDES
-	" other color settings in a scheme.
+  " Setting my own personal preferences for color schemes. This OVERRIDES
+  " other color settings in a scheme.
 
-	" These lines make it so NonText is invisible. NonText is used for the
-	" "Tilde" chars at the end of the file, when no more lines exist. I think
-	" it's ugly, personally, so this makes them invisible. It also makes sure
-	" the background is the same as a normal file.
-	" I prefer to use the end of the line number column as a way of seeing
-	" where the file ends.
-	" Note: NonText also deals with some of the listchars, for example, eol,
-	" extends and precedes.
-    " TEMP: I'm trying to turn this off, because it makes me not see EOL
-    " chars.
-    " Will make the bg the bg, but keep it visible.
-	" hi NonText guifg=bg
-    hi NonText guibg=bg
-    hi NonText ctermbg=bg
+  " These lines make it so NonText is invisible. NonText is used for the
+  " "Tilde" chars at the end of the file, when no more lines exist. I think
+  " it's ugly, personally, so this makes them invisible. It also makes sure
+  " the background is the same as a normal file.
+  " I prefer to use the end of the line number column as a way of seeing
+  " where the file ends.
+  " Note: NonText also deals with some of the listchars, for example, eol,
+  " extends and precedes.
+  " TEMP: I'm trying to turn this off, because it makes me not see EOL
+  " chars.
+  " Will make the bg the bg, but keep it visible.
+  " hi NonText guifg=bg
+  hi NonText guibg=bg
+  hi NonText ctermbg=bg
 
-	" These lines deal with the SpecialKey, which is used for listchars. This
-	" basically gives the listchars the same background as everything else,
-	" and a foreground that's a little bit brighter than the background.
-	" The way I use listchars, is that I have only tabs visible all the time. 
-	" I use them as indentation markers. Giving them the same background but a
-	" slighly lighter foreground makes them look like the indent markers in
-	" most editors, exactly how I like it.
-	" This only work with Tabs though.
-	let bgcolor=synIDattr(hlID('NonText'), 'bg#')
-	if exists("&background")
-		if &background == "light"
-			let step = -40
-		else
-			let step = 40
-		endif
-	else
-		let step = 40
-	endif
+  " These lines deal with the SpecialKey, which is used for listchars. This
+  " basically gives the listchars the same background as everything else,
+  " and a foreground that's a little bit brighter than the background.
+  " The way I use listchars, is that I have only tabs visible all the time. 
+  " I use them as indentation markers. Giving them the same background but a
+  " slighly lighter foreground makes them look like the indent markers in
+  " most editors, exactly how I like it.
+  " This only work with Tabs though.
+  let bgcolor=synIDattr(hlID('NonText'), 'bg#')
+  if exists("&background")
+    if &background == "light"
+      let step = -40
+    else
+      let step = 40
+    endif
+  else
+    let step = 40
+  endif
 
-	let newcolor=AlterBrightness(bgcolor, step)
-	execute "hi SpecialKey guifg=" . newcolor . " guibg=bg gui=NONE"
-    " execute "hi SpecialKey ctermfg=" . newcolor . " ctermbg=bg gui=NONE"
+  let newcolor=AlterBrightness(bgcolor, step)
+  execute "hi SpecialKey guifg=" . newcolor . " guibg=bg gui=NONE"
+  " execute "hi SpecialKey ctermfg=" . newcolor . " ctermbg=bg gui=NONE"
 
-	" I like matchparen to have an underline to make it more obvious.
-	hi MatchParen gui=underline
+  " I like matchparen to have an underline to make it more obvious.
+  hi MatchParen gui=underline
 
-    hi Folded guibg=bg
+  hi Folded guibg=bg
 endfunction
 autocmd ColorScheme * call GlobalColorSettings()  " Call the global color settings on every colorscheme change.
 
@@ -442,6 +443,7 @@ autocmd ColorScheme * call GlobalColorSettings()  " Call the global color settin
 " colorscheme vibrantink 
 " colorscheme inkpot
 " colorscheme wombat
+" colorscheme wombat256
 " colorscheme lucius
 " colorscheme mustang 
 " colorscheme ir_black 
@@ -456,7 +458,15 @@ autocmd ColorScheme * call GlobalColorSettings()  " Call the global color settin
 " colorscheme wombat
 set background=dark
 " colorscheme base16-flat
-colorscheme monokai
+" colorscheme base16-pop
+" colorscheme base16-eighties
+" colorscheme monokai
+
+" colorscheme apprentice
+colorscheme onedark
+" colorscheme material
+" colorscheme dracula
+
 
 
 " Gets rid of the bell (still use a visual bell).
@@ -535,10 +545,13 @@ au BufRead,BufNewFile *.html set matchpairs=(:),{:},[:]
 
 
 " Command mode mappings for easier searcher and stuff.
-cmap <m-8> .*
+" cmap <m-8> .*
 cmap ,. .*
-cmap <m-v> '<,'>
-cmap <m-f> **/*
+" cmap <m-v> '<,'>
+" cmap <m-f> **/*
+
+" Command mode map to make alt-bs (which I map to caps-w) work as intended.
+cnoremap <M-BS> <C-W>
 
 " New: try to adda command line mappign which goes to the end of a search.
 " And actually, let's also add a normal mode map.
@@ -1274,24 +1287,24 @@ function! LoadNerdTree()
 	endif
 endfunction
 
-nmap <F1> :call LoadNerdTree()<cr>
+nmap <leader>1 :call LoadNerdTree()<cr>
 
 " F2 -
-nmap <F2> :NERDTreeFind<cr>
+nmap <leader>2 :NERDTreeFind<cr>
 
 " F4
 " map <F3> :TlistToggle <cr>
-nmap <F3> :TagbarToggle <cr>
+nmap <leader>3 :TagbarToggle <cr>
 
 
 " Set up search in projects. Not really great yet.
 " nmap <F4> :vimgrep // **/*.py **/*.js **/*.txt **/*.html **/*.css **/*.bat **/*.less <left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left>
-nmap <F4> :Grep 
+nmap <leader>4 :Grep 
 
-nmap <F5> :set titlestring=
+nmap <leader>5 :set titlestring=
 " set titlestring=%{substitute(getcwd(),\ $HOME,\ '~',\ '')}
 " set titlestring=%{substitute(getcwd(),\ $HOME,\ '~',\ '')}
-nmap <F6> :let &titlestring=split(getcwd(),"/")[-1]<CR>
+nmap <leader>6 :let &titlestring=split(getcwd(),"/")[-1]<CR>
 
 
 function! <SID>SynStack()
@@ -1304,10 +1317,10 @@ endfunc
 nnoremap <silent> <F10> :call <SID>SynStack()<CR>
 
 " F6
-nnoremap <F7> :GundoToggle<CR>
+nnoremap <leader>7 :GundoToggle<CR>
 
 " F11
-map <f8> :!ctags -R .<cr>
+map <leader>8 :!ctags -R .<cr>
 "nnoremap <silent> <F11> :YRShow<CR>
 
 " Copy the current file path to the clipboard.
@@ -1393,7 +1406,7 @@ omap <silent> iP <Plug>AngryInnerSuffix
 " E.g., if you have (first, second, third), running this when you're on the
 " first param (cursor somehwere on "first") will swap it with "second". On
 " "second", and you swap "second" and "third".
-" WARNING: This doesn't work well! Unortunately, because of the way the
+" WARNING: This doesn't work well! Unfortunately, because of the way the
 " Paramater object works.
 nmap cxP cxiPf,llcxiP
 
@@ -1433,15 +1446,28 @@ let g:startify_list_order = [
 set guifont=Monaco:h12
 
 " DevIcons (nerdfonts)
-" set guifont=Fura\ Code:h13
-" set guifont=DroidSansMonoForPowerline\ Nerd\ Font:h13
-" set guifont=Knack\ Nerd\ Font:h13
-" set guifont=ProFontWindows\ Nerd\ Font:h16
 " set guifont=AnonymicePowerline\ Nerd\ Font:h15 " Really awesome, should try.
 " set guifont=BitStreamVeraSansMono\ Nerd\ Font:h13
+" set guifont=Fura\ Code:h13
+" set guifont=DroidSansMonoForPowerline\ Nerd\ Font:h13 " Good, but not very special IMO.
+" set guifont=Knack\ Nerd\ Font:h13
+" set guifont=ProFontWindows\ Nerd\ Font:h16
 " set guifont=DejaVuSansMonoForPowerline\ Nerd\ Font:h13
 " set guifont=Hurmit\ Nerd\ Font:h13 " Nice, but too 'robotic'. But maybe not?
 " set guifont=InconsolataForPowerline\ Nerd\ Font:h15 " Very nice! Should try. 
 " set guifont=Lekton\ Nerd\ Font:h15 " Nice, a bit 'straight' and 'hard'. But Nice.
-set guifont=AurulentSansMono\ Nerd\ Font:h13 " My favorite so far
+" set guifont=LiterationMonoPowerline\ Nerd\ Font:h14 " Nice.
+set guifont=mplus\ Nerd\ Font:h15 " Interesting, tallish.
+" set guifont=MonofurForPowerline\ Nerd\ Font:h15 " Interesting, roundish.
+" set guifont=Monoid\ Nerd\ Font:h13 " Interesting, tallish.
+" set guifont=ProggyCleanTTSZ\ Nerd\ Font:h17 " Very small..
+" set guifont=RobotoMono\ Nerd\ Font:h15 " Very simple.
+" set guifont=SauceCodePro\ Nerd\ Font:h15 " Nice, short.
+" set guifont=AurulentSansMono\ Nerd\ Font:h13 " My favorite so far
+" set guifont=Monaco\ For\ Powerline\ Plus\ Nerd\ File\ Types:h13 " My favorite so far
 
+" Font reports so far:
+" Anonymice - Really loving this so far.
+
+" Also for webdevicons:
+" let g:WebDevIconsNerdTreeAfterGlyphPadding = '  '
