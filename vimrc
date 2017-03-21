@@ -141,9 +141,9 @@ nnoremap c< #``cgN
 " au BufRead,BufNewFile * hi EasyMotionTarget2Second ctermbg=none ctermfg=none
 
 " let g:EasyMotion_re_anywhere = '\v' .
-            " " \       '(<.|^)' . '|' .
-            " " \       '(<.|.$)' . '|' .
-            " " \       '(\l)\zs(\u)' . '|' .
+" " \       '(<.|^)' . '|' .
+" " \       '(<.|.$)' . '|' .
+" " \       '(\l)\zs(\u)' . '|' .
 
 
 " Surround.vim: Map regular "s" (as opposed to capital "S") in visual mode to
@@ -272,13 +272,13 @@ let g:tagbar_autofocus = 1
 " let g:tagbar_usearrows=1
 
 let g:tagbar_type_css = {
-\ 'ctagstype' : 'Css',
-    \ 'kinds'     : [
-        \ 'c:classes',
-        \ 's:selectors',
-        \ 'i:identities'
-    \ ]
-\ }
+      \ 'ctagstype' : 'Css',
+      \ 'kinds'     : [
+      \ 'c:classes',
+      \ 's:selectors',
+      \ 'i:identities'
+      \ ]
+      \ }
 
 
 " We set these for snimpate to work properly. 
@@ -313,19 +313,19 @@ let python_highlight_numbers = 1
 
 " Jump to a number.
 fun! GoToNumber()
-	let pattern = '\d\+'
-	let found_num = search(pattern, '', line("."))
-	if found_num == 0
-		call search(pattern, 'b', line("."))
-	endif
+  let pattern = '\d\+'
+  let found_num = search(pattern, '', line("."))
+  if found_num == 0
+    call search(pattern, 'b', line("."))
+  endif
 endf
 
 fun! GoToBlock()
-	let pattern = "[()'\"{}<>]" 
-	let found = search(pattern, '', line("."))
-	if found == 0
-		call search(pattern, 'b', line("."))
-	endif
+  let pattern = "[()'\"{}<>]" 
+  let found = search(pattern, '', line("."))
+  if found == 0
+    call search(pattern, 'b', line("."))
+  endif
 endf
 nnoremap <silent> gm :call GoToNumber()<cr>
 nnoremap <silent> gb :call GoToBlock()<cr>
@@ -346,9 +346,9 @@ nnoremap <bs> k^
 vnoremap <bs> k^
 
 
- " Maximize Vim on startup.
+" Maximize Vim on startup.
 " au GUIEnter * simalt ~x
- 
+
 set guioptions-=m
 set guioptions-=L
 set guioptions-=l
@@ -364,26 +364,26 @@ nmap <c-s-tab> :bn<cr>
 " set complete=.,w,b,u,t,i,]
 
 fun! AlterBrightness(hexcolor, steps)
-	let colorstr = strpart(a:hexcolor, 1)
+  let colorstr = strpart(a:hexcolor, 1)
 
-	let rhex = strpart(colorstr,0,2)
-	let ghex = strpart(colorstr,2,2)
-	let bhex = strpart(colorstr,4,2)
+  let rhex = strpart(colorstr,0,2)
+  let ghex = strpart(colorstr,2,2)
+  let bhex = strpart(colorstr,4,2)
 
-	let r = str2nr(rhex, 16)
-	let g = str2nr(ghex, 16)
-	let b = str2nr(bhex, 16)
+  let r = str2nr(rhex, 16)
+  let g = str2nr(ghex, 16)
+  let b = str2nr(bhex, 16)
 
-	let ri = min([255, r + a:steps])
-	let r = max([0, ri])
+  let ri = min([255, r + a:steps])
+  let r = max([0, ri])
 
-	let gi = min([255, g + a:steps])
-	let g = max([0, gi])
+  let gi = min([255, g + a:steps])
+  let g = max([0, gi])
 
-	let bi = min([255, b + a:steps])
-	let b = max([0, bi])
+  let bi = min([255, b + a:steps])
+  let b = max([0, bi])
 
-	return '#' . printf('%02x', r) . printf('%02x', g) . printf('%02x', b)
+  return '#' . printf('%02x', r) . printf('%02x', g) . printf('%02x', b)
 endf
 
 " Set global color settings, regardless of colorscheme currently in use.
@@ -522,21 +522,21 @@ nnoremap <leader>r :CtrlPTag <cr>
 
 let g:ctrlp_use_caching = 0
 if executable('ag')
-    set grepprg=ag\ --nogroup\ --nocolor
+  set grepprg=ag\ --nogroup\ --nocolor
 
-    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 else
   let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
   let g:ctrlp_prompt_mappings = {
-    \ 'AcceptSelection("e")': ['<space>', '<cr>', '<2-LeftMouse>'],
-    \ }
+	\ 'AcceptSelection("e")': ['<space>', '<cr>', '<2-LeftMouse>'],
+	\ }
 endif
 
 " Sane Ignore For ctrlp
 " let g:ctrlp_custom_ignore = {
-  " \ 'dir':  '\.git$\|\.hg$\|\.svn$\|\.yardoc\|public\/images\|public\/system\|data\|log\|tmp|migrations$',
-  " \ 'file': '\.exe$\|\.so$\|\.dat$|\.png$|\.jpg$'
-  " \ }
+" \ 'dir':  '\.git$\|\.hg$\|\.svn$\|\.yardoc\|public\/images\|public\/system\|data\|log\|tmp|migrations$',
+" \ 'file': '\.exe$\|\.so$\|\.dat$|\.png$|\.jpg$'
+" \ }
 
 
 " I dislike <> in matchpairs for some reason. At least in html.
@@ -562,9 +562,9 @@ cnoremap <M-BS> <C-W>
 
 " let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$'
 " let g:ctrlp_custom_ignore = {
-    " \ 'dir':  '\.git$\|\.hg$\|\.svn$',
-    " \ 'file': '\.exe$\|\.so$\|\.dll$|\.pyc$',
-    " \ }
+" \ 'dir':  '\.git$\|\.hg$\|\.svn$',
+" \ 'file': '\.exe$\|\.so$\|\.dll$|\.pyc$',
+" \ }
 
 
 
@@ -621,44 +621,44 @@ set spellsuggest=5
 " set nospell
 
 fun! SplitBracesCR()
-    if strpart(getline('.'), col('.') - 2, 2) == '{}'
-        return "\<CR>\<CR>\<Up>\<Tab>"
-    endif
-    if strpart(getline('.'), col('.') - 2, 2) == '()'
-        return "\<CR>\<CR>\<Up>\<Tab>"
-    endif
-    if strpart(getline('.'), col('.') - 2, 2) == '><'
-        return "\<CR>\<CR>\<Up>\<Tab>"
-    endif
-    if strpart(getline('.'), col('.') - 2, 2) == '> <'
-        return "\<CR>\<CR>\<Up>\<Tab>"
-    endif
+  if strpart(getline('.'), col('.') - 2, 2) == '{}'
+    return "\<CR>\<CR>\<Up>\<Tab>"
+  endif
+  if strpart(getline('.'), col('.') - 2, 2) == '()'
+    return "\<CR>\<CR>\<Up>\<Tab>"
+  endif
+  if strpart(getline('.'), col('.') - 2, 2) == '><'
+    return "\<CR>\<CR>\<Up>\<Tab>"
+  endif
+  if strpart(getline('.'), col('.') - 2, 2) == '> <'
+    return "\<CR>\<CR>\<Up>\<Tab>"
+  endif
 
-    " Tryout!!! 
-    " This has a few bugs, get rid of it for now.
-    " if match(getline('.'), '^\s*\*') != -1
-        " return "\<CR>* "
-    " endif
+  " Tryout!!! 
+  " This has a few bugs, get rid of it for now.
+  " if match(getline('.'), '^\s*\*') != -1
+  " return "\<CR>* "
+  " endif
 
-    " if match(getline('.'), '^\s*\-') != -1
-        " return "\<CR>- "
-    " endif
+  " if match(getline('.'), '^\s*\-') != -1
+  " return "\<CR>- "
+  " endif
 
 
-    " End Tryout!! 
+  " End Tryout!! 
 
-    " if strpart(getline('.'), col('.') - 2, 2) == '()'
-        " return "\<CR>\<CR>\<Up>\<Tab>"
-    " endif
+  " if strpart(getline('.'), col('.') - 2, 2) == '()'
+  " return "\<CR>\<CR>\<Up>\<Tab>"
+  " endif
 
-    " if strpart(getline('.'), col('.') - 2, 2) == '[]'
-        " return "\<CR>\<CR>\<Up>\<Tab>"
-    " endif
+  " if strpart(getline('.'), col('.') - 2, 2) == '[]'
+  " return "\<CR>\<CR>\<Up>\<Tab>"
+  " endif
 
-    " if strpart(getline('.'), col('.') - 2, 2) == '""'
-        " return "\<CR>\<CR>\<Up>\<Tab>"
-    " endif
-    return "\<CR>"
+  " if strpart(getline('.'), col('.') - 2, 2) == '""'
+  " return "\<CR>\<CR>\<Up>\<Tab>"
+  " endif
+  return "\<CR>"
 endfun
 inoremap <CR> <C-R>=SplitBracesCR()<CR>
 
@@ -708,24 +708,24 @@ vnoremap <silent> . :normal .<CR>
 
 let g:QRecord=0
 function! QRecord()
-	if(g:QRecord == 0)
-		let g:QRecord=1
-		execute "normal qz"
-	else
-		let g:QRecord=0
-		execute "normal q"
-	endif
+  if(g:QRecord == 0)
+    let g:QRecord=1
+    execute "normal qz"
+  else
+    let g:QRecord=0
+    execute "normal q"
+  endif
 endfunction
 
 
 function! QActivate()
-	if(g:QRecord == 0)
-		let g:QRecord=1
-		execute "normal qz"
-	else
-		let g:QRecord=0
-		execute "normal q"
-	endif
+  if(g:QRecord == 0)
+    let g:QRecord=1
+    execute "normal qz"
+  else
+    let g:QRecord=0
+    execute "normal q"
+  endif
 endfunction
 
 " And my own addition, which repeats a macro (recorded on register "q") on selected lines.
@@ -747,57 +747,57 @@ set wildmenu
 " OK new plan, try to set it up so the cursorline is visible on current window.
 set cursorline
 augroup highlight_follows_focus
-    autocmd!
-    autocmd WinEnter * set cursorline
-    autocmd WinLeave * set nocursorline
+  autocmd!
+  autocmd WinEnter * set cursorline
+  autocmd WinLeave * set nocursorline
 augroup END
 
 augroup highlight_follows_insert
-    autocmd!
-    autocmd InsertLeave * set cursorline
-    autocmd InsertEnter * set nocursorline
+  autocmd!
+  autocmd InsertLeave * set cursorline
+  autocmd InsertEnter * set nocursorline
 augroup END
 
 
 
 " This makes folds work by indent, but also allows manual folding.
 " augroup vimrc
-  " au BufReadPre * setlocal foldmethod=indent
-  " au bufwinenter * if &fdm == 'indent' | setlocal foldmethod=manual | endif
+" au BufReadPre * setlocal foldmethod=indent
+" au bufwinenter * if &fdm == 'indent' | setlocal foldmethod=manual | endif
 " augroup end
 
 fun! SetFoldMethodIndent()
-	set foldmethod=indent   "fold based on indent
-	set foldignore -=# " Don't ignore # as part of the indented text to be folded, because python is ripe with # marks. 
+  set foldmethod=indent   "fold based on indent
+  set foldignore -=# " Don't ignore # as part of the indented text to be folded, because python is ripe with # marks. 
 endf
 
 au BufRead,BufNewFile * let b:fold_open_search = 0
 
 fun! ToggleFoldSearch()
-	if b:fold_open_search == 0
-		set foldopen +=search
-		let b:fold_open_search = 1
-	else
-		set foldopen -=search
-		let b:fold_open_search = 0
-	endif
+  if b:fold_open_search == 0
+    set foldopen +=search
+    let b:fold_open_search = 1
+  else
+    set foldopen -=search
+    let b:fold_open_search = 0
+  endif
 endf
 
 au BufRead,BufNewFile * let b:fold_follow_movement = 0
 fun! ToggleFoldFollowCursor()
-	if b:fold_follow_movement == 0
-		set foldopen +=all
-		set foldclose +=all
-		let b:fold_follow_movement = 1
-	else
-		set foldopen -=all
-		set foldclose -=all
-		let b:fold_follow_movement = 0
-	endif
+  if b:fold_follow_movement == 0
+    set foldopen +=all
+    set foldclose +=all
+    let b:fold_follow_movement = 1
+  else
+    set foldopen -=all
+    set foldclose -=all
+    let b:fold_follow_movement = 0
+  endif
 endf
 
 fun! SetFoldByLastSearch()
-	setlocal foldexpr=(getline(v:lnum)=~@/)?0:(getline(v:lnum-1)=~@/)\\|\\|(getline(v:lnum+1)=~@/)?1:2 foldmethod=expr foldlevel=0 foldenable
+  setlocal foldexpr=(getline(v:lnum)=~@/)?0:(getline(v:lnum-1)=~@/)\\|\\|(getline(v:lnum+1)=~@/)?1:2 foldmethod=expr foldlevel=0 foldenable
 endf
 
 " Try this for a while - the \ key is now my "fold-options" key.
@@ -828,133 +828,156 @@ set foldopen -=search
 " set foldcolumn=4
 
 fu! CustomFoldText()
-	"get first non-blank line
-	let fs = v:foldstart
-	while getline(fs) =~ '^\s*$' | let fs = nextnonblank(fs + 1)
-	endwhile
-	if fs > v:foldend
-		let line = getline(v:foldstart)
-	else
-		let line = substitute(getline(fs), '\t', repeat(' ', &tabstop), 'g')
-	endif
+  "get first non-blank line
+  let fs = v:foldstart
+  while getline(fs) =~ '^\s*$' | let fs = nextnonblank(fs + 1)
+  endwhile
+  if fs > v:foldend
+    let line = getline(v:foldstart)
+  else
+    let line = substitute(getline(fs), '\t', repeat(' ', &tabstop), 'g')
+  endif
 
-	let w = winwidth(0) - &foldcolumn - (&number ? 8 : 0)
-	let foldSize = 1 + v:foldend - v:foldstart
-	let foldSizeStr = " " . foldSize . " lines "
-	let foldLevelStr = repeat("+--", v:foldlevel)
-	let lineCount = line("$")
-	let foldPercentage = printf("[%.1f", (foldSize*1.0)/lineCount*100) . "%] "
-	let expansionString = repeat(" ", w - strwidth(foldSizeStr.line.foldLevelStr.foldPercentage))
-	return line . expansionString . foldSizeStr . foldPercentage . foldLevelStr
+  let w = winwidth(0) - &foldcolumn - (&number ? 8 : 0)
+  let foldSize = 1 + v:foldend - v:foldstart
+  let foldSizeStr = " " . foldSize . " lines "
+  let foldLevelStr = repeat("+--", v:foldlevel)
+  let lineCount = line("$")
+  let foldPercentage = printf("[%.1f", (foldSize*1.0)/lineCount*100) . "%] "
+  let expansionString = repeat(" ", w - strwidth(foldSizeStr.line.foldLevelStr.foldPercentage))
+  return line . expansionString . foldSizeStr . foldPercentage . foldLevelStr
 endf
 
 
 function! MyFoldText()
-    let line = getline(v:foldstart)
-    let line2 = getline(v:foldstart + 1)
-    let sub = substitute(line . "|" . line2, '/\*\|\*/\|{{{\d\=', '', 'g')
-    let ind = indent(v:foldstart)
-    let lines = v:foldend-v:foldstart + 1
-    let i = 0
-    let spaces = ''
-    while i < (ind - ind/4)
-        let spaces .= ' '
-        let i = i+1
-    endwhile
-    return spaces . sub . ' --------(' . lines . ' lines)'
+  let line = getline(v:foldstart)
+  let line2 = getline(v:foldstart + 1)
+  let sub = substitute(line . "|" . line2, '/\*\|\*/\|{{{\d\=', '', 'g')
+  let ind = indent(v:foldstart)
+  let lines = v:foldend-v:foldstart + 1
+  let i = 0
+  let spaces = ''
+  while i < (ind - ind/4)
+    let spaces .= ' '
+    let i = i+1
+  endwhile
+  return spaces . sub . ' --------(' . lines . ' lines)'
 endfunction
 
 function! MyFoldText2()
-	" setting fold text
-	let nl = v:foldend - v:foldstart + 1
-	let comment = substitute(getline(v:foldstart),"^ *\" *","",1)
-	let linetext = substitute(getline(v:foldstart+1),"^ *","",1)
-	let txt = '+ ' . comment . ': ' . nl .  ' ' . v:foldstart . '                                                                                                                                                                  '
-	return txt
+  " setting fold text
+  let nl = v:foldend - v:foldstart + 1
+  let comment = substitute(getline(v:foldstart),"^ *\" *","",1)
+  let linetext = substitute(getline(v:foldstart+1),"^ *","",1)
+  let txt = '+ ' . comment . ': ' . nl .  ' ' . v:foldstart . '                                                                                                                                                                  '
+  return txt
 endfunction
 
 
 function! MyFoldTextOverflow()
-	let lines = 1 + v:foldend - v:foldstart
-	let ind = indent(v:foldstart)
+  let lines = 1 + v:foldend - v:foldstart
+  let ind = indent(v:foldstart)
 
-	let spaces = ''
-	let i = 0
-	while i < ind
-		let i = i+1
-		let spaces = spaces . ' '
-	endwhile
+  let spaces = ''
+  let i = 0
+  while i < ind
+    let i = i+1
+    let spaces = spaces . ' '
+  endwhile
 
-	let linestxt = 'lines'
-	if lines == 1
-		linestxt = 'line'
-	endif
+  let linestxt = 'lines'
+  if lines == 1
+    linestxt = 'line'
+  endif
 
-	return spaces . '+' . v:folddashes . ' '. lines . ' ' . linestxt . ': ' . getline(v:foldstart)
+  return spaces . '+' . v:folddashes . ' '. lines . ' ' . linestxt . ': ' . getline(v:foldstart)
 endfunction
 
 function! EdanFoldText()
-	let lines = 1 + v:foldend - v:foldstart
-	let ind = indent(v:foldstart)
+  let lines = 1 + v:foldend - v:foldstart
+  let ind = indent(v:foldstart)
 
-	let spaces = ''
-	let i = 0
-	while i < ind
-		let i = i + 1
-		let spaces = spaces . ' '
-	endwhile
+  let spaces = ''
+  let i = 0
+  while i < ind
+    let i = i + 1
+    let spaces = spaces . ' '
+  endwhile
 
-	let linestxt = 'lines'
-	if lines == 1
-		linestxt = 'line'
-	endif
+  let linestxt = 'lines'
+  if lines == 1
+    linestxt = 'line'
+  endif
 
-	let sep = repeat(' ', 20)
+  let sep = repeat(' ', 20)
 
-	" return spaces . '+' . v:folddashes . ' '. lines . ' ' . linestxt
-	return spaces . '... ' . sep . lines . ' ' . linestxt
+  " return spaces . '+' . v:folddashes . ' '. lines . ' ' . linestxt
+  return spaces . '... ' . sep . lines . ' ' . linestxt
 endfunction
 
 function! EdanFoldText2()
-	let lines = 1 + v:foldend - v:foldstart
-    let line = getline(v:foldstart)
-	let ind = indent(v:foldstart)
+  let lines = 1 + v:foldend - v:foldstart
+  let line = getline(v:foldstart)
+  let ind = indent(v:foldstart)
 
-	let spaces = ''
-	let i = 0
-	while i < ind
-		let i = i + 1
-		let spaces = spaces . ' '
-	endwhile
+  let i = 0
+  let spaces = ''
+  while i < ind
+    let i = i + 1
+    let spaces = spaces . ' '
+  endwhile
 
-	let linestxt = 'lines'
-	if lines == 1
-		linestxt = 'line'
-	endif
+  let linestxt = 'lines'
+  if lines == 1
+    linestxt = 'line'
+  endif
 
-	let sep = repeat(' ', 20)
+  let sep = repeat(' ', 20)
 
-    return line . '+' . v:folddashes . ' '. lines . ' ' . linestxt
-    " return spaces . '... ' . sep . lines . ' ' . linestxt
+  return line . '+' . v:folddashes . ' '. lines . ' ' . linestxt
+  " return spaces . '... ' . sep . lines . ' ' . linestxt
+endfunction
+
+function! EdanFoldText3()
+  let lines = 1 + v:foldend - v:foldstart
+  let line = getline(v:foldstart)
+  let ind = indent(v:foldstart)
+
+  let i = 0
+  let spaces = ''
+  while i < ind
+    let i = i + 1
+    let spaces = spaces . ' '
+  endwhile
+
+  let linestxt = 'lines'
+  if lines == 1
+    linestxt = 'line'
+  endif
+
+  let sep = repeat(' ', 20)
+
+  return spaces . lines . ' ' . linestxt . ': ' . line . v:folddashes
+  " return spaces . '... ' . sep . lines . ' ' . linestxt
 endfunction
 
 
 " Copied from Steve Losh:
 " https://bitbucket.org/sjl/dotfiles/src/tip/vim/vimrc
 function! LoshFoldText() " {{{
-    let line = getline(v:foldstart)
+  let line = getline(v:foldstart)
 
-    let nucolwidth = &fdc + &number * &numberwidth
-    let windowwidth = winwidth(0) - nucolwidth - 3
-    let foldedlinecount = v:foldend - v:foldstart
+  let nucolwidth = &fdc + &number * &numberwidth
+  let windowwidth = winwidth(0) - nucolwidth - 3
+  let foldedlinecount = v:foldend - v:foldstart
 
-    " expand tabs into spaces
-    let onetab = strpart('          ', 0, &tabstop)
-    let line = substitute(line, '\t', onetab, 'g')
+  " expand tabs into spaces
+  let onetab = strpart('          ', 0, &tabstop)
+  let line = substitute(line, '\t', onetab, 'g')
 
-    let line = strpart(line, 0, windowwidth - 2 -len(foldedlinecount))
-    let fillcharcount = windowwidth - len(line) - len(foldedlinecount)
-    return line . '…' . repeat(" ",fillcharcount) . foldedlinecount . '…' . ' '
+  let line = strpart(line, 0, windowwidth - 2 -len(foldedlinecount))
+  let fillcharcount = windowwidth - len(line) - len(foldedlinecount)
+  return line . '…' . repeat(" ",fillcharcount) . foldedlinecount . '…' . ' '
 endfunction " }}}
 
 " set foldtext=MyFoldText()
@@ -966,7 +989,9 @@ endfunction " }}}
 " After trying it for a bit, I decided I don't much like it.
 " set fillchars=fold:\ 
 set foldtext=EdanFoldText()
+" set foldtext=EdanFoldText2()
 " set foldtext=LoshFoldText()
+set foldtext=EdanFoldText3()
 
 "make shift Y behave like shift-[cd] (copy to end of line)
 nnoremap Y y$
@@ -1018,10 +1043,10 @@ set statusline=%1*%m%*\ %t\ %f\ %r%h%w\ [FILETYPE=%Y]\ [ASCII=\%03.3b]\ [HEX=0x\
 hi User1 term=inverse,bold cterm=inverse,bold ctermfg=red 
 
 "command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
-	 "\ | wincmd p | diffthis
-	 "
-	 "
-	 "
+"\ | wincmd p | diffthis
+"
+"
+"
 function! DiffWithFileFromDisk()
   let filename=expand('%')
 
@@ -1049,11 +1074,11 @@ map <Leader>A :%y<cr>
 
 
 function! ToggleNuMode()
-	if(&rnu == 1)
-		set nu
-	else
-		set rnu
-	endif
+  if(&rnu == 1)
+    set nu
+  else
+    set rnu
+  endif
 endfunc
 
 " nnoremap <C-g> :call ToggleNuMode()<CR>
@@ -1090,20 +1115,21 @@ let NERDTreeStatusline="NERDTree"
 " let NERDTreeShowLineNumbers=1
 let NERDTreeChDirMode=2 " Changes the cwd to whatever the root is. 
 let NERDTreeMinimalUI=1
-let NERDTreeDirArrows=1
+let NERDTreeDirArrows=0
+let NERDTreeShowHidden=1
 
 " NERDTree Colors
 
 " Enable this to get color coding of files in NerdTree.
 " function! NThl(mtch, cs)
-  " exec "autocmd filetype nerdtree syn match " . a:mtch . " #^\\s\\+.*" . a:mtch . "\\*\\?$#"
-  " exec "autocmd filetype nerdtree highlight " . a:mtch . " " . a:cs
+" exec "autocmd filetype nerdtree syn match " . a:mtch . " #^\\s\\+.*" . a:mtch . "\\*\\?$#"
+" exec "autocmd filetype nerdtree highlight " . a:mtch . " " . a:cs
 " endfunction
 " augroup MyNerdTree
-  " autocmd!
-  " call NThl('php', 'ctermfg=077 guifg=#5FD75F gui=BOLD cterm=BOLD')
-  " call NThl('css', 'ctermfg=57 guifg=#5F00FF gui=BOLD cterm=BOLD')
-  " autocmd filetype nerdtree highlight Directory ctermfg=166 guifg=#D75F00 gui=BOLD cterm=BOLD
+" autocmd!
+" call NThl('php', 'ctermfg=077 guifg=#5FD75F gui=BOLD cterm=BOLD')
+" call NThl('css', 'ctermfg=57 guifg=#5F00FF gui=BOLD cterm=BOLD')
+" autocmd filetype nerdtree highlight Directory ctermfg=166 guifg=#D75F00 gui=BOLD cterm=BOLD
 " augroup END " MyNerdTree
 " highlight NERDTreeDirSlash guifg=#005F87 ctermfg=24 gui=BOLD cterm=BOLD
 " highlight NERDTreeCWD guifg=#444444 ctermfg=238 gui=BOLD cterm=BOLD
@@ -1123,23 +1149,23 @@ let NERDTreeDirArrows=1
 " skipblanks (bool): true: Skip blank lines
 " false: Don't skip blank lines
 function! NextIndent(exclusive, fwd, lowerlevel, skipblanks)
-	let line = line('.')
-	let lastline = line('$')
-	let indent = indent(line)
-	let stepvalue = a:fwd ? 1 : -1
-	while (line > 0 && line <= lastline)
-		let line = line + stepvalue
-		if ( ! a:lowerlevel && indent(line) == indent ||
-					\ a:lowerlevel && indent(line) < indent)
-			if (! a:skipblanks || strlen(getline(line)) > 0)
-				if (a:exclusive)
-					let line = line - stepvalue
-				endif
-				exe line
-				return
-			endif
-		endif
-	endwhile
+  let line = line('.')
+  let lastline = line('$')
+  let indent = indent(line)
+  let stepvalue = a:fwd ? 1 : -1
+  while (line > 0 && line <= lastline)
+    let line = line + stepvalue
+    if ( ! a:lowerlevel && indent(line) == indent ||
+	  \ a:lowerlevel && indent(line) < indent)
+      if (! a:skipblanks || strlen(getline(line)) > 0)
+	if (a:exclusive)
+	  let line = line - stepvalue
+	endif
+	exe line
+	return
+      endif
+    endif
+  endwhile
 endfunction
 
 " Moving back and forth between lines of same or lower indentation.
@@ -1190,19 +1216,19 @@ onoremap im :<c-u>call <SID>NumberTextObject(1)<cr>
 xnoremap im :<c-u>call <SID>NumberTextObject(1)<cr>
 
 function! s:NumberTextObject(whole)
-    normal! v
+  normal! v
 
-    while getline('.')[col('.')] =~# '\v[0-9]'
-        normal! l
+  while getline('.')[col('.')] =~# '\v[0-9]'
+    normal! l
+  endwhile
+
+  if a:whole
+    normal! o
+
+    while col('.') > 1 && getline('.')[col('.') - 2] =~# '\v[0-9]'
+      normal! h
     endwhile
-
-    if a:whole
-        normal! o
-
-        while col('.') > 1 && getline('.')[col('.') - 2] =~# '\v[0-9]'
-            normal! h
-        endwhile
-    endif
+  endif
 endfunction
 
 
@@ -1231,10 +1257,10 @@ command! -nargs=+ -complete=command BM call BufMessage(<q-args>)
 " " inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 " inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
-  " \ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+" \ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
 
 " inoremap <expr> <M-,> pumvisible() ? '<C-n>' :
-  " \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+" \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
 
 
 " inoremap <expr> <Down> pumvisible() ? "\<C-n>" : "\<Down>"
@@ -1249,11 +1275,12 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
-" Try: map the ctrl+90-= keys to "stretch" the window.
-nnoremap <leader>xo 10<C-w>>
-nnoremap <leader>xu 10<C-w><
-nnoremap <leader>xi 10<C-w>-
-nnoremap <leader>x, 10<C-w>+
+" Map leader plus shift direction to resize splits.
+" Except for K, which is mapped to highlight words, so we'll use I instead?
+nnoremap <leader>L 10<C-w>>
+nnoremap <leader>H 10<C-w><
+nnoremap <leader>I 5<C-w>-
+nnoremap <leader>J 5<C-w>+
 
 
 " Copied from:
@@ -1279,12 +1306,12 @@ nmap Q <Plug>Kwbd
 " nmap <F1> :NERDTreeToggle<cr>gg<c-w>=
 let g:firstNerd=0
 function! LoadNerdTree()
-    execute ":NERDTreeToggle"
-    normal <c-w>=
-	if g:firstNerd==0
-        normal gg
-        let g:firstNerd=1
-	endif
+  execute ":NERDTreeToggle"
+  normal <c-w>=
+  if g:firstNerd==0
+    normal gg
+    let g:firstNerd=1
+  endif
 endfunction
 
 nmap <leader>1 :call LoadNerdTree()<cr>
@@ -1340,42 +1367,44 @@ let g:multi_cursor_quit_key='<ESC>'
 let g:multi_cursor_exit_from_visual_mode=0
 let g:multi_cursor_exit_from_insert_mode=0
 let g:multi_cursor_normal_maps={'!':1, '@':1, '=':1, 'q':1, 'r':1, 't':1, 'T':1, 'y':1, '[':1, ']':1, '\':1, 'd':1, 'f':1, 'F':1, 'g':1, '"':1, 'z':1, 'c':1, 'm':1, '<':1, '>':1}
+nnoremap <silent> <leader>m/ :MultipleCursorsFind <C-R>/<CR>
+vnoremap <silent> <leader>m/ :MultipleCursorsFind <C-R>/<CR>
 
 
 " TODO Management
 function! Convert_to_char_class(cur) 
-    if a:cur =~ '[2-9]'
-        return '[0-' . (a:cur-1) . ']'
-    endif
-    return '0'
+  if a:cur =~ '[2-9]'
+    return '[0-' . (a:cur-1) . ']'
+  endif
+  return '0'
 endfunction
 
 function! Match_number_before(num)
-    let branches = []
-    let init = ''
-    for i in range(len(a:num))
-        if a:num[i] =~ '[1-9]'
-            call add(branches, init . Convert_to_char_class(a:num[i]) . repeat('\d', len(a:num) - i - 1))
-        endif 
-        let init .= a:num[i]
-    endfor
-    return '\%(' . join(branches, '\|') .'\)'
+  let branches = []
+  let init = ''
+  for i in range(len(a:num))
+    if a:num[i] =~ '[1-9]'
+      call add(branches, init . Convert_to_char_class(a:num[i]) . repeat('\d', len(a:num) - i - 1))
+    endif 
+    let init .= a:num[i]
+  endfor
+  return '\%(' . join(branches, '\|') .'\)'
 endfunction
 
 function! Match_date_before(date)
-    if a:date !~ '\v\d{4}-\d{2}-\d{2}'
-        echo "invalid date"
-        return
-    endif
+  if a:date !~ '\v\d{4}-\d{2}-\d{2}'
+    echo "invalid date"
+    return
+  endif
 
-    let branches =[]
+  let branches =[]
 
-    let parts = split(a:date, '-')
-    call add(branches, Match_number_before(parts[0]) . '-\d\{2}-\d\{2}')
-    call add(branches, parts[0] . '-' . Match_number_before(parts[1]) . '-\d\{2}')
-    call add(branches, parts[0] . '-' . parts[1] . '-' .Match_number_before(parts[2]))
+  let parts = split(a:date, '-')
+  call add(branches, Match_number_before(parts[0]) . '-\d\{2}-\d\{2}')
+  call add(branches, parts[0] . '-' . Match_number_before(parts[1]) . '-\d\{2}')
+  call add(branches, parts[0] . '-' . parts[1] . '-' .Match_number_before(parts[2]))
 
-    return '\%(' . join(branches, '\|') .'\)'
+  return '\%(' . join(branches, '\|') .'\)'
 endfunction
 
 " g//caddexpr expand("%") . ":" . line(".") .  ":" . getline(".")
@@ -1426,13 +1455,13 @@ cnoremap $d <CR>:d<CR>``
 let g:startify_bookmarks = [ {'c': '~/.vimrc'}, '~/.zshrc' ]
 
 let g:startify_list_order = [
-            \ ['MRU Files'],
-            \ 'files',
-            \ ['Sessions'],
-            \ 'sessions',
-            \ ['Bookmarks'],
-            \ 'bookmarks',
-            \ ]
+      \ ['MRU Files'],
+      \ 'files',
+      \ ['Sessions'],
+      \ 'sessions',
+      \ ['Bookmarks'],
+      \ 'bookmarks',
+      \ ]
 
 
 
