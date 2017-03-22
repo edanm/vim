@@ -136,6 +136,10 @@ nnoremap c> *``cgn
 nnoremap c< #``cgN
 
 
+" Make ,. repeat the last "change word" command.
+nnoremap <leader>. :let @/=@"<cr>/<cr>cgn<c-r>.<esc>
+
+
 " Make the second letter NOT highlighted in easymotion to prevent massive
 " colors on screen. Still easy to use.
 " au BufRead,BufNewFile * hi EasyMotionTarget2Second ctermbg=none ctermfg=none
@@ -176,9 +180,11 @@ vnoremap < <gv
 vnoremap > >gv
 
 " Make - and shift-"-" add a newline above/below this line in normal mode. 
-noremap - mzO<Esc>`z
-noremap _ mzo<Esc>`z
-
+" noremap - mzO<Esc>`z
+" noremap _ mzo<Esc>`z
+" Don't use that much, instead, let's map - to :, because of my ubermoves
+" mapping.
+nnoremap - :
 
 
 " vim-expand-region mappings.
@@ -701,32 +707,10 @@ let delimitMate_expand_space = 1
 
 
 " From: http://vim.wikia.com/wiki/VimTip1142
-" nmap . .`[
 " noremap <leader>q `[<Down>.
+map g. `[<Down>.
 vnoremap <silent> . :normal .<CR>
 
-
-let g:QRecord=0
-function! QRecord()
-  if(g:QRecord == 0)
-    let g:QRecord=1
-    execute "normal qz"
-  else
-    let g:QRecord=0
-    execute "normal q"
-  endif
-endfunction
-
-
-function! QActivate()
-  if(g:QRecord == 0)
-    let g:QRecord=1
-    execute "normal qz"
-  else
-    let g:QRecord=0
-    execute "normal q"
-  endif
-endfunction
 
 " And my own addition, which repeats a macro (recorded on register "q") on selected lines.
 " vnoremap <silent> <leader>s :normal @q<CR>
@@ -1367,6 +1351,7 @@ let g:multi_cursor_quit_key='<ESC>'
 let g:multi_cursor_exit_from_visual_mode=0
 let g:multi_cursor_exit_from_insert_mode=0
 let g:multi_cursor_normal_maps={'!':1, '@':1, '=':1, 'q':1, 'r':1, 't':1, 'T':1, 'y':1, '[':1, ']':1, '\':1, 'd':1, 'f':1, 'F':1, 'g':1, '"':1, 'z':1, 'c':1, 'm':1, '<':1, '>':1}
+let g:multi_cursor_visual_maps={'i':1, 'a':1, 'f':1, 'F':1, 't':1, 'T':1, 'g':1}
 nnoremap <silent> <leader>m/ :MultipleCursorsFind <C-R>/<CR>
 vnoremap <silent> <leader>m/ :MultipleCursorsFind <C-R>/<CR>
 
@@ -1500,3 +1485,7 @@ set guifont=mplus\ Nerd\ Font:h15 " Interesting, tallish.
 
 " Also for webdevicons:
 " let g:WebDevIconsNerdTreeAfterGlyphPadding = '  '
+
+
+" Fix for delay that happens in terminal for some reason:
+set timeoutlen=1000 ttimeoutlen=0
